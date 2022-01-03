@@ -1,0 +1,46 @@
+@import 'Src/global.scss';
+
+.app {
+  background: yellowgreen;
+  display: flex;
+  flex-direction: column;
+  button {
+    margin-top: 10px;
+  }
+  width: 750px;
+  margin: 0 auto 0;
+}
+
+.nav_wrap {
+  background: rgba($color: rgb(4, 81, 197), $alpha: 0.5);
+  display: flex;
+  justify-content: space-between;
+  a {
+    color: rgba($color: $font_c, $alpha: 0.7);
+  }
+  color: rgba($color: $font_c, $alpha: 0.7);
+}
+
+.enters {
+  animation: custom-enter 0.7 ease;
+}
+.exit{
+  animation: custom-exit 0.7 ease;
+}
+
+@keyframes customEnter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+@keyframes customExit {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0;
+  }
+}

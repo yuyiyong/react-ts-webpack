@@ -1,0 +1,19 @@
+@import 'Src/global.scss';
+
+.btn_about {
+  @extend .btn;
+  width: 200px;
+}
+.div_wrap {
+  width: 200px;
+  height: 200px;
+  margin: 10px auto;
+  background: url('../../../../public/assets/images/29-1Z32G5401X41.jpeg') no-repeat;
+  background-size: 100% auto;
+}
+
+.test_wrap {
+  width: 750px;
+  background: #fc0;
+  margin: 10px auto;
+}

@@ -1,0 +1,10 @@
+$font_c: #fff;
+$active: rgb(107, 4, 98);
+
+.btn {
+    padding:10px;
+    background: rgb(107, 39, 163);
+    text-align: center;
+    color: $font_c;
+    cursor: pointer;
+}

@@ -1,0 +1,36 @@
+.modal_wrap {
+  height: 100%;
+  width: 100%;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.content_wrap {
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+$title_padding: 10px;
+.title {
+  text-align: center;
+  position: relative;
+  padding: $title_padding;
+}
+
+.close {
+  position: absolute;
+  right: $title_padding;
+  top: $title_padding;
+  cursor: pointer;
+}
+.footer_wrap {
+  display: flex;
+  justify-content: space-between;
+  background: #0f0;
+  padding: $title_padding;
+}
