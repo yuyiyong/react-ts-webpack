@@ -1,0 +1,19 @@
+@import 'Src/global.scss';
+.wrap {
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #000;
+  @extend .sc;
+  input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  input:focus {
+    outline: none;
+    border: 0px;
+  }
+}

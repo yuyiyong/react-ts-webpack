@@ -1,0 +1,32 @@
+@import 'Src/global.scss';
+
+.btn_about {
+  @extend .btn;
+  width: 200px;
+}
+.div_wrap {
+  width: 200px;
+  height: 200px;
+  margin: 10px auto;
+  // background: url('../../../../public/assets/images/29-1Z32G5401X41.jpeg') no-repeat;
+  background: url('https://www.easyatm.com.tw/img/c/332/n5GcuM3X0YTOyAjMygDN5UjM1QTMwcTOykzMyQTNwAzMxAzL4QzL3EzLt92YucmbvRWdo5Cd0FmLyE2LvoDc0RHa.jpg');
+  background-size: 100% auto;
+}
+
+.test_wrap {
+  width: 750px;
+  background: rgb(99, 30, 211);
+  margin: 10px auto;
+}
+
+.test2 {
+  width: 500px;
+  height: 400px;
+  background: rgb(255, 174, 0);
+}
+
+.img_obj{
+  object-fit: contain;
+  width: 300px;
+  height: 140px;
+}

@@ -1,0 +1,3 @@
+type langType = {
+  title: string
+}

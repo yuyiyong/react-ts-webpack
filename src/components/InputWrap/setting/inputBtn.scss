@@ -1,0 +1,7 @@
+@import "Src/global.scss";
+.inputBtn {
+    input {
+        border: none;
+        @extend .btn;
+    }
+}

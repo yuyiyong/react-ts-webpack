@@ -1,0 +1,21 @@
+@import 'Src/global.scss';
+
+.nav_menu {
+  @extend .sc;
+  width: 400px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.nav_wrap {
+  background: rgba($color: rgb(4, 81, 197), $alpha: 0.5);
+  display: flex;
+  justify-content: space-between;
+  a {
+    color: rgba($color: $font_c, $alpha: 0.7);
+  }
+  color: rgba($color: $font_c, $alpha: 0.7);
+  position: relative;
+}

@@ -1,0 +1,45 @@
+$font_c: #fff;
+$active: rgb(107, 4, 98);
+
+.btn {
+  padding: 10px;
+  background: rgb(107, 39, 163);
+  text-align: center;
+  color: $font_c;
+  cursor: pointer;
+}
+
+@mixin setImg($url, $width, $height) {
+  width: $width;
+  height: $height;
+  // background: rgba(213, 206, 230, 0.5);
+  background: url($url) no-repeat center center;
+  background-size: 100% auto;
+  image-rendering: -moz-crisp-edges;
+  @extend .img_clear;
+}
+
+@mixin flexd($j, $a) {
+  display: flex;
+  justify-content: $j;
+  align-items: $a;
+}
+
+.cc {
+  @include flexd(center, center);
+}
+.ct {
+  @include flexd(center, flex-start);
+}
+.lc {
+  @include flexd(flex-start, center);
+}
+.sc {
+  @include flexd(space-between, center);
+}
+.st {
+  @include flexd(space-between, flex-start);
+}
+.lt {
+  @include flexd(flex-start, flex-start);
+}
