@@ -5,7 +5,8 @@ const webpack = require('webpack')
 const proxySetting = require('../../src/setProxy')
 module.exports = merge(common, {
   mode: 'development',
-  devtool: 'cheap-module-source-map',
+  // devtool: 'cheap-module-source-map',
+  devtool: 'eval-cheap-module-source-map',
   plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
     host: SERVER_HOST, // 指定 host，不设置的话默认是 localhost

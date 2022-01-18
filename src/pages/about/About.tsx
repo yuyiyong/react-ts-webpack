@@ -15,6 +15,8 @@ import { TEST_TYPE } from 'Src/store/globalReducer'
 import HookToast from 'Src/components/toast/HookToast'
 import CustomerList from 'Src/components/CustomerList/CustomerList'
 import ProductCenter from 'Src/server/ProductCenter'
+import EthHooks from 'Src/components/EthHooks/EthHooks'
+import Contract from 'Src/components/EthHooks/Contract'
 // import { ItemInfo } from 'react-tiny-virtual-list'
 // import { CustomerListRenderItem } from 'Src/components/CustomerList/CustomerList.d'
 
@@ -26,6 +28,8 @@ export default function About(props: IAboutProps) {
   const { langState, dispatchLang } = useStore()
   const { themeState, dispatchTheme } = useThemeStore()
   const { globalState, dispatchGlobal } = useGlobalStore()
+
+  
 
   const handle = () => {
     console.log('handle -78787878')
@@ -78,7 +82,9 @@ export default function About(props: IAboutProps) {
       {' '}
       {/* // The style property contains the item's absolute position Letter:{" "} */}
       {item.titleCn}, Row: #{index}
-      <div><img className='img_obj' src={item.coverImage}  /></div>
+      <div>
+        <img className="img_obj" src={item.coverImage} />
+      </div>
     </div>
   )
 
@@ -86,12 +92,13 @@ export default function About(props: IAboutProps) {
     return ProductCenter.subjectRecommendPage({ chainId: 0, pageNum, pageSize: 10, position: 1 })
   }
 
-  const modal2Handle = () => {
-
-  }
+  const modal2Handle = () => {}
 
   return (
     <>
+      <h3>调取合约</h3>
+      <EthHooks />
+      <Contract />
       <h3>customer list</h3>
       <CustomerList request={getFaxian} itemSize={200} renderItem={renderItem} height={300} />
       <h3>useReducer</h3>
@@ -136,7 +143,7 @@ export default function About(props: IAboutProps) {
         <div>modal提示内容</div>
         <h3>modal提示内容</h3>
       </ProModal>
-      <ProModal visible={visible2} onCancel={()=>setVisible2(false)} onOk={onOk}>
+      <ProModal visible={visible2} onCancel={() => setVisible2(false)} onOk={onOk}>
         <div>modal提示内容2</div>
         <h3>modal提示内容2</h3>
       </ProModal>

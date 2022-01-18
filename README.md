@@ -60,6 +60,8 @@ axios
 
 ## form
 
+[react-hook-form](https://react-hook-form.com/zh/advanced-usage/)
+
 
 ## hooks
 
@@ -73,3 +75,12 @@ axios
 
 ## Iconfont
 [blog 参考](https://blog.csdn.net/bidang3275/article/details/117126196)
+
+
+### hooks 改造
+
+[改造](https://bobi.ink/2019/08/10/react-hooks/)
+
+### upload 组件
+> - 1 表单数组的输入 输出
+> - 2 有上传进度条

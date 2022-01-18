@@ -68,11 +68,11 @@ class ComUtils {
   codeResult: CodeResult = ({ res, success, error }) => {
     try {
       if (res.code === 200) {
-        success(res.data,res.page)
+        success(res.data, res.page)
       } else {
         error && error(res.data)
         res.message && HookToast(res.message)
-        if (res.code === 1003) {
+        if (res.code === 1003 || res.code === 401) {
           console.log('去登陆')
           // ! 是否去掉cookie
         }

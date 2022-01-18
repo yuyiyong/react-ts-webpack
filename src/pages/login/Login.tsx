@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Control, useForm, useWatch } from 'react-hook-form'
+import { Control, Controller, useForm, useWatch } from 'react-hook-form'
 import InputBtn from 'Src/components/InputWrap/InputBtn'
 import InputWrap from 'Src/components/InputWrap/InputWrap'
 import ProBtn from 'Src/components/ProBtn/ProBtn'
@@ -12,10 +12,17 @@ import utils from 'Src/utils/utils'
 import Pre from 'Src/components/Pre/Pre'
 import useLoading from 'Src/hooks/useLoading'
 import useAsyncFn from 'Src/hooks/useAsyncFn'
+import ProUpload from 'Src/components/ProUpload/ProUpload'
 
 export interface ILoginProps {}
 
+enum LoginTab {
+  email,
+  mobile,
+}
+
 export default function Login(props: ILoginProps) {
+  const [tabKey, setTabKey] = React.useState(LoginTab.email)
   const {
     register,
     handleSubmit,
@@ -24,13 +31,31 @@ export default function Login(props: ILoginProps) {
     control,
     getValues,
     setError,
-  } = useForm<loginByEmailParams>({ defaultValues: { email: '1191893756@qq.com', code: '1123' } })
+  } = useForm<LoginParams>({
+    defaultValues:
+      tabKey === LoginTab.email
+        ? ({ email: '1191893756@qq.com', code: '1123', img: 'er花' } as loginByEmailParams)
+        : ({ mobile: 18967129601, code: '1122', countryCode: 86 } as loginByMobileParams),
+  })
   const [infoState, setInfoState] = React.useState<null | InfoSetResponse>(null)
 
   const btnSet = () => {
     setValue('email', 'duixr')
     setValue('code', '123456')
+    setValue('img', '小黑')
   }
+
+  React.useEffect(() => {
+    if (tabKey === LoginTab.email) {
+      setValue('email', '1191893756@qq.com')
+      setValue('code', '123456')
+      setValue('img', '小黑')
+    } else {
+      setValue('mobile', 18967129601)
+      setValue('code', '123456')
+      setValue('countryCode', 86)
+    }
+  }, [tabKey])
   /*   const email = useWatch({
     control,
     name: 'email',
@@ -86,7 +111,7 @@ export default function Login(props: ILoginProps) {
   const [login, doLogin] = useAsyncFn(async () => {
     console.log('bb-->', bb.current)
 
-    const res = await UserCenter.loginByEmail({ email: 'string', code: 'string' })
+    const res = await UserCenter.loginByEmail({ email: 'string', code: 'string', img: 'sss' })
     return res
   }, [])
 
@@ -95,7 +120,6 @@ export default function Login(props: ILoginProps) {
   const onSubmit = async (params: loginByEmailParams) => {
     console.log('1111-->', params)
     bb.current = params
-    console.log('doLogin---', doLogin)
     doLogin()
 
     // console.log('params==>', params)
@@ -111,26 +135,70 @@ export default function Login(props: ILoginProps) {
     // })
   }
 
+  const tabKeyHandle = (val: LoginTab) => {
+    setTabKey(val)
+  }
+
   return (
     <div>
       <>
         <button onClick={btnSet}>set value</button>
-        <h2>
+        <h1>
           <ProIcon>&#xe66f;</ProIcon> Login
-        </h2>
+        </h1>
+        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
         <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="lc">
+            <h2 onClick={() => tabKeyHandle(0)}>Email</h2>
+            <div> &nbsp; &nbsp; &nbsp; </div>
+            <h2 onClick={() => tabKeyHandle(1)}>Phone</h2>
+          </div>
+
+          {/* <Controller
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ProUpload size={{ width: 100, height: 120 }} onChange={onChange} value={value} />
+            )}
+            control={control}
+            name="img"
+          /> */}
           {/* register your input into the hook by invoking the "register" function */}
 
-          <InputWrap>
-            <input
-              {...register('email', {
-                required: true,
-                // pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
-              })}
-            />
-          </InputWrap>
-          {errors.email && <span>This field is required</span>}
+          {tabKey === LoginTab.email && (
+            <React.Fragment>
+              <InputWrap>
+                <input
+                  {...register('email', {
+                    required: true,
+                    // pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+                  })}
+                />
+              </InputWrap>
+              {errors.email && <span>This field is required</span>}
+            </React.Fragment>
+          )}
+          {tabKey === 1 && (
+            <React.Fragment>
+              <InputWrap>
+                <input
+                  {...register('mobile', {
+                    required: true,
+                    // pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+                  })}
+                />
+              </InputWrap>
+              {errors.mobile && <span>This field is required</span>}
 
+              <InputWrap>
+                <input
+                  {...register('countryCode', {
+                    required: true,
+                    // pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+                  })}
+                />
+              </InputWrap>
+              {errors.countryCode && <span>This field is required</span>}
+            </React.Fragment>
+          )}
           {/* include validation with required or other standard HTML validation rules */}
           <InputWrap>
             <input {...register('code', { required: true })} style={{ fontSize: '20px' }} />

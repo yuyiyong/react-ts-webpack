@@ -11,7 +11,7 @@ const getClientEnvironment = require('./env')
 // const paths = require('./paths');
 const env = getClientEnvironment('')
 const px2rem = require('postcss-pxtorem')
-
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const getCssLoaders = (importLoaders) => [
   isDev
     ? 'style-loader'
@@ -56,6 +56,7 @@ const getCssLoaders = (importLoaders) => [
 
 module.exports = {
   target: 'web',
+  // target: 'node',
   entry: {
     app: path.resolve(PROJECT_PATH, './src/index.tsx'),
   },
@@ -66,6 +67,13 @@ module.exports = {
   },
 
   plugins: [
+    // new NodePolyfillPlugin({
+    //   excludeAliases: ["console"]
+    // }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser.js',
+      Buffer: ['buffer', 'Buffer'],
+    }),
     new webpack.DefinePlugin(env.stringified),
     // new HardSourceWebpackPlugin(), // 过时
 
@@ -156,12 +164,53 @@ module.exports = {
   },
   // other...
   resolve: {
+    aliasFields: ['browser'],
     extensions: ['.tsx', '.ts', '.js', '.json'],
     alias: {
+      buffer: 'buffer',
+      https: 'https-browserify',
+      http: 'https-browserify',
       Src: resolve(PROJECT_PATH, './src'),
       Components: resolve(PROJECT_PATH, './src/components'),
       Utils: resolve(PROJECT_PATH, './src/utils'),
       App: resolve(PROJECT_PATH, './'),
+      assert: resolve(PROJECT_PATH, './assert.ts'),
+      path: resolve(PROJECT_PATH, './node_modules/path-browserify'),
+    },
+    fallback: {
+      // crypto: false,
+      // stream: require.resolve('stream-browserify'),
+      // buffer: require.resolve('buffer'),
+      // assert: false,
+      // util: false,
+      // http: false,
+      // https: false,
+      // os: false,
+      fs: false,
+      // "path": require.resolve("path-browserify"),
+      assert: require.resolve('assert/'),
+      buffer: require.resolve('buffer/'),
+      console: require.resolve('console-browserify'),
+      constants: require.resolve('constants-browserify'),
+      crypto: require.resolve('crypto-browserify'),
+      domain: require.resolve('domain-browser'),
+      events: require.resolve('events'),
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
+      os: require.resolve('os-browserify/browser'),
+      path: require.resolve('path-browserify'),
+      punycode: require.resolve('punycode'),
+      process: require.resolve('process/browser'),
+      querystring: require.resolve('querystring-es3'),
+      stream: require.resolve('stream-browserify'),
+      string_decoder: require.resolve('string_decoder'),
+      sys: require.resolve('util'),
+      timers: require.resolve('timers-browserify'),
+      tty: require.resolve('tty-browserify'),
+      url: require.resolve('url'),
+      util: require.resolve('util'),
+      vm: require.resolve('vm-browserify'),
+      zlib: require.resolve('browserify-zlib'),
     },
   },
   cache: {

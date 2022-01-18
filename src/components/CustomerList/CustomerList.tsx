@@ -49,7 +49,7 @@ const CustomerList = ({ renderItem, height, itemSize, request }: ICustomerListPr
 
   const [state, doFetch] = useAsyncFn(async () => {
     return await promiseFn()
-  }, [ promiseFn])
+  }, [promiseFn])
 
   useLoading([state.loading])
 
@@ -63,7 +63,6 @@ const CustomerList = ({ renderItem, height, itemSize, request }: ICustomerListPr
   useEffect(() => {
     setdata(testArr())
   }, [])
-  
 
   useEffect(() => {
     console.log('data===>', data)
