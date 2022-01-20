@@ -7,12 +7,14 @@ import ProIcon from 'Src/components/ProIcon/ProIcon'
 import '../../../public/assets/iconfont/iconfont.css'
 import './setting/login.scss'
 import UserCenter from 'Src/server/UserCenter'
-import { SEND_EMAIL_TYPE } from 'Src/consts/ENUM'
 import utils from 'Src/utils/utils'
 import Pre from 'Src/components/Pre/Pre'
 import useLoading from 'Src/hooks/useLoading'
 import useAsyncFn from 'Src/hooks/useAsyncFn'
 import ProUpload from 'Src/components/ProUpload/ProUpload'
+import { SEND_EMAIL_TYPE, SEND_MOBILE_TYPE } from 'Src/consts/ENUM'
+import HookToast from 'Src/components/toast/HookToast'
+import CONST from 'Src/consts/CONST'
 
 export interface ILoginProps {}
 
@@ -38,12 +40,6 @@ export default function Login(props: ILoginProps) {
         : ({ mobile: 18967129601, code: '1122', countryCode: 86 } as loginByMobileParams),
   })
   const [infoState, setInfoState] = React.useState<null | InfoSetResponse>(null)
-
-  const btnSet = () => {
-    setValue('email', 'duixr')
-    setValue('code', '123456')
-    setValue('img', '小黑')
-  }
 
   React.useEffect(() => {
     if (tabKey === LoginTab.email) {
@@ -87,6 +83,27 @@ export default function Login(props: ILoginProps) {
       res,
       success: (data) => {
         console.log('data===>', data)
+        HookToast('发送成功')
+      },
+    })
+  }
+
+  const getMobileCode = async () => {
+    const mobile = getValues('mobile')
+    const countryCode = getValues('countryCode')
+    if (!mobile) {
+      setError('mobile', { type: 'type', message: 'requre' }, { shouldFocus: true })
+      return
+    }
+    if (!countryCode) {
+      setError('countryCode', { type: 'type', message: 'requre' }, { shouldFocus: true })
+      return
+    }
+    const res = await UserCenter.sendSms({ mobile, countryCode, type: SEND_MOBILE_TYPE.loginOrRegistor })
+    utils.codeResult({
+      res,
+      success: (data) => {
+        HookToast('发送成功')
       },
     })
   }
@@ -108,19 +125,37 @@ export default function Login(props: ILoginProps) {
     // console.log('res', res)
   }, [])
 
-  const [login, doLogin] = useAsyncFn(async () => {
-    console.log('bb-->', bb.current)
+  const [loginEmail, doEmailLogin] = useAsyncFn(async () => {
+    console.log('bb-->', tempararyParamsRef.current)
 
     const res = await UserCenter.loginByEmail({ email: 'string', code: 'string', img: 'sss' })
     return res
   }, [])
 
-  const loadings = useLoading([login.loading, infoSet.loading])
-  const bb = React.useRef<loginByEmailParams | {}>({})
+  const [loginMobile, doMobileLogin] = useAsyncFn(async () => {
+    const res = await UserCenter.loginByMobile(tempararyParamsRef.current)
+    utils.codeResult({
+      res,
+      success: (data) => {
+        HookToast('登陆成功')
+        console.log('data.accessToken--', data.accessToken)
+
+        utils.setCookie(CONST.COOKIE.TOKENS, data.accessToken, CONST.COOKIE.DAY)
+      },
+    })
+  }, [])
+
+  const loadings = useLoading([loginEmail.loading, infoSet.loading])
+  const tempararyParamsRef = React.useRef<LoginParams | {}>({})
   const onSubmit = async (params: loginByEmailParams) => {
     console.log('1111-->', params)
-    bb.current = params
-    doLogin()
+    tempararyParamsRef.current = params
+    if (tabKey === LoginTab.email) {
+      doEmailLogin()
+    }
+    if (tabKey === LoginTab.mobile) {
+      doMobileLogin()
+    }
 
     // console.log('params==>', params)
     // const res = await UserCenter.loginByEmail(params)
@@ -137,12 +172,12 @@ export default function Login(props: ILoginProps) {
 
   const tabKeyHandle = (val: LoginTab) => {
     setTabKey(val)
+    tempararyParamsRef.current = {}
   }
 
   return (
     <div>
       <>
-        <button onClick={btnSet}>set value</button>
         <h1>
           <ProIcon>&#xe66f;</ProIcon> Login
         </h1>
@@ -176,7 +211,7 @@ export default function Login(props: ILoginProps) {
               {errors.email && <span>This field is required</span>}
             </React.Fragment>
           )}
-          {tabKey === 1 && (
+          {tabKey === LoginTab.mobile && (
             <React.Fragment>
               <InputWrap>
                 <input
@@ -202,8 +237,9 @@ export default function Login(props: ILoginProps) {
           {/* include validation with required or other standard HTML validation rules */}
           <InputWrap>
             <input {...register('code', { required: true })} style={{ fontSize: '20px' }} />
-            <ProBtn onClick={doInfo}>get Code</ProBtn>
-            {/* <ProBtn onClick={getEMail}>get Code</ProBtn> */}
+            {/* <ProBtn onClick={doInfo}>get Code</ProBtn> */}
+            {tabKey === LoginTab.email && <ProBtn onClick={getEMail}>get Code</ProBtn>}
+            {tabKey === LoginTab.mobile && <ProBtn onClick={getMobileCode}>get Code</ProBtn>}
           </InputWrap>
           {/* errors will return when field validation fails  */}
           {errors.code && <span>This field is required</span>}
@@ -213,7 +249,7 @@ export default function Login(props: ILoginProps) {
           </InputBtn>
           <IsolateReRender control={control} />
         </form>
-        <ProBtn onClick={doLogin}>InfoSet</ProBtn>
+        <ProBtn onClick={doEmailLogin}>InfoSet</ProBtn>
       </>
       <Pre>{infoSet}</Pre>
       <>

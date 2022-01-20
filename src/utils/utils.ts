@@ -58,7 +58,7 @@ class ComUtils {
     config.headers!['device_id'] = this.getCookie(CONST.COOKIE.DEVICE)
     config.headers!['app_version_code'] = 'web pc'
     config.headers!['access_token'] = this.getCookie(CONST.COOKIE.TOKENS)
-    config.headers!['Platform'] = 'gameduck'
+    config.headers!['Platform'] = 'mita' // 'gameduck'
     config.headers!['trace_id'] = this.RedomStr(30)
     config.headers!['Accept-Language'] = lang
     config.headers!['area'] = AREA.sea.toString()
@@ -69,16 +69,21 @@ class ComUtils {
     try {
       if (res.code === 200) {
         success(res.data, res.page)
+        return res.data
       } else {
-        error && error(res.data)
+        error && error(res && res.data)
+        console.log('error message--', res.message)
+
         res.message && HookToast(res.message)
-        if (res.code === 1003 || res.code === 401) {
+        if (res.code === 1003) {
           console.log('去登陆')
           // ! 是否去掉cookie
         }
+        return null
       }
     } catch (err) {
       console.log(err)
+      return null
     }
   }
 
@@ -108,6 +113,11 @@ class ComUtils {
     date.setDate(date.getDate() + exdays) //getDate返回一个月中的某一天
     var expires = 'expires=' + date.toUTCString() //根据世界时 (UTC) 把 Date 对象转换为字符串
     document.cookie = cname + '=' + cvalue + '; ' + expires
+  }
+  isFormData = (v: any) => {
+    console.log('Object.prototype.toString.call(v)---', Object.prototype.toString.call(v))
+
+    return Object.prototype.toString.call(v) === '[object FormData]'
   }
 }
 

@@ -6,6 +6,8 @@ import HookToast from '../toast/HookToast'
 import ProPrograss from '../ProPrograss/ProPrograss'
 import Pre from '../Pre/Pre'
 import utils from 'Src/utils/utils'
+import http from 'Src/utils/http'
+import CONST, { UPLOAD_TYPE } from 'Src/consts/CONST'
 
 type ImgType = {
   base64: string
@@ -25,7 +27,7 @@ export default function ProUpload({
   const [stateImg, setStateImg] = React.useState<StateImgType>({})
   // const [src, setSrc] = React.useState<any>('')
   const onSuccessHandle = (response: Record<string, unknown>, file: RcFile, xhr: XMLHttpRequest) => {
-    // console.log('onSuccessHandle-', response, file)
+    console.log('onSuccessHandle-', response, file)
     utils.codeResult<any>({
       res: response as any,
       success: () => {
@@ -122,19 +124,55 @@ export default function ProUpload({
     return data
   }
 
-  // const customRequest = ({
-  //   action,
-  //   data,
-  //   file,
-  //   filename,
-  //   headers,
-  //   onError,
-  //   onProgress,
-  //   onSuccess,
-  //   withCredentials,
-  // }:UploadRequestOption<any>)=>{
+  const customRequest = ({
+    action,
+    data,
+    file,
+    filename,
+    headers,
+    onError,
+    onProgress,
+    onSuccess,
+    withCredentials,
+  }: UploadRequestOption<any>) => {
+    console.log('file111---', file)
+    console.log('data111---', data)
+    const formData = new FormData()
+    if (data) {
+      Object.keys(data).forEach((key) => {
+        formData.append(key, (data as any)[key])
+      })
+    }
+    formData.append('file', file)
+    formData.append('type', UPLOAD_TYPE.ART_IMAGE)
+    formData.forEach((item, key) => {
+      console.log(key, 'key---', formData.get(key))
+    })
+    // axios.post(action,formData,{
 
-  // }
+    // }).then((data) => {
+    //   onSuccess && onSuccess({ data, file })
+    // })
+    // return
+
+    http
+      .post(action+'123', formData, {
+        headers: {
+          ...headers,
+
+          'Content-Type': 'multipart/form-data;',
+        },
+        onUploadProgress: (params) => {
+          onProgress && onProgress(params)
+        },
+      })
+      .then((data) => {
+        onSuccess && onSuccess(data)
+      })
+      .catch((err) => {
+        onError && onError(err)
+      })
+  }
   return (
     <React.Fragment>
       <Pre>{stateImg}</Pre>
@@ -162,7 +200,7 @@ export default function ProUpload({
       </div>
       <Upload
         className="hh"
-        name="hahah" // 文件名称
+        name="file" // 文件名称
         withCredentials={true} // ajax upload with cookie send
         openFileDialogOnClick={true}
         onSuccess={onSuccessHandle}
@@ -172,10 +210,10 @@ export default function ProUpload({
         multiple={true}
         data={dataHandle}
         method="POST"
-        action={`http://47.103.196.97:8080/admin/sys/oss/upload?token=842aa79a913618bfb59095642b67e2ff`}
+        action={`/system-center/oss/upload`}
         disabled={disabled}
         type="drag"
-        // customRequest={customRequest}
+        customRequest={customRequest}
       >
         你好
       </Upload>

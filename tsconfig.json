@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    // "suppressImplicitAnyIndexErrors":true, // 类似 arr[cc] 不报错
     "downlevelIteration": true,
     // 基本配置
     "target": "ES5", // 编译成哪个版本的 es

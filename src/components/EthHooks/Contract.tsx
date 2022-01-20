@@ -47,6 +47,7 @@ export default function Contract() {
   }
   return (
     <>
+    <div>123123</div>
       <h3>contract</h3>
       <h4>{Result}</h4>
       <ProBtn onClick={getContractHandle}>获取合约</ProBtn>

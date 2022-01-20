@@ -15,8 +15,11 @@ import { TEST_TYPE } from 'Src/store/globalReducer'
 import HookToast from 'Src/components/toast/HookToast'
 import CustomerList from 'Src/components/CustomerList/CustomerList'
 import ProductCenter from 'Src/server/ProductCenter'
-import EthHooks from 'Src/components/EthHooks/EthHooks'
+// import EthHooks from 'Src/components/EthHooks/EthHooks'
 import Contract from 'Src/components/EthHooks/Contract'
+import { Controller, useForm } from 'react-hook-form'
+import ProUpload from 'Src/components/ProUpload/ProUpload'
+import CreatArt from './CreatArt'
 // import { ItemInfo } from 'react-tiny-virtual-list'
 // import { CustomerListRenderItem } from 'Src/components/CustomerList/CustomerList.d'
 
@@ -28,8 +31,6 @@ export default function About(props: IAboutProps) {
   const { langState, dispatchLang } = useStore()
   const { themeState, dispatchTheme } = useThemeStore()
   const { globalState, dispatchGlobal } = useGlobalStore()
-
-  
 
   const handle = () => {
     console.log('handle -78787878')
@@ -93,12 +94,36 @@ export default function About(props: IAboutProps) {
   }
 
   const modal2Handle = () => {}
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    control,
+    getValues,
+    setError,
+  } = useForm()
 
+  const onSubmit = async (params: any) => {
+    console.log('params--->', params)
+  }
   return (
     <>
+      <CreatArt />
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ProUpload size={{ width: 100, height: 120 }} onChange={onChange} value={value} />
+            )}
+            control={control}
+            name="img"
+          />
+        </form>
+      </div>
       <h3>调取合约</h3>
-      <EthHooks />
-      <Contract />
+      {/* <EthHooks />*/}
+      <Contract /> 
       <h3>customer list</h3>
       <CustomerList request={getFaxian} itemSize={200} renderItem={renderItem} height={300} />
       <h3>useReducer</h3>

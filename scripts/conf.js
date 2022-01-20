@@ -5,6 +5,7 @@ const PROJECT_NAME = path.parse(PROJECT_PATH).name;
 
 // Dev server host and port
 const SERVER_HOST = 'localhost';
+// const SERVER_HOST = '192.168.198.2';
 const SERVER_PORT = 8080;
 
 // Whether to enable bundle package analysis

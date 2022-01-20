@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import ProBtn from '../ProBtn/ProBtn'
 import ModalFooter from './ModalFooter'
 import ModalTitle from './ModalTitle'
-import  './promodal.scss'
+import './promodal.scss'
 // import styles from './promodal.scss'
 
 export interface IModalProps {
@@ -13,7 +13,7 @@ export interface IModalProps {
   zIndex?: number
   centered?: boolean
   title?: string
-  footer?: any
+  footer?: boolean
   wrapClassName?: string
   okText?: string
   okType?: string
@@ -27,14 +27,14 @@ export interface IModalProps {
   children?: React.ReactNode
 }
 
-export default function Modal({
+export default function ProModal({
   visible = false,
   style,
   width = 520,
   zIndex = 1000,
   centered = false,
   title = 'title',
-  footer,
+  footer = true,
   wrapClassName = '',
   okText = '确定',
   okType = 'primary',
@@ -56,16 +56,16 @@ export default function Modal({
           style={{
             zIndex,
           }}
-          className='modal_wrap'
+          className="modal_wrap"
         >
-          <div className='content_wrap' style={{ minWidth: width }}>
+          <div className="content_wrap" style={{ minWidth: width }}>
             <ModalTitle onClose={onCancel}>{title}</ModalTitle>
             {children}
-            <ModalFooter>
-              <>
+            {footer && (
+              <ModalFooter>
                 <ProBtn onClick={onOk}>确定</ProBtn> <ProBtn onClick={onCancel}>取消</ProBtn>
-              </>
-            </ModalFooter>
+              </ModalFooter>
+            )}
           </div>
         </div>,
         // <div

@@ -28,6 +28,7 @@ module.exports = merge(common, {
       new BundleAnalyzerPlugin({
         analyzerMode: 'server', // 开一个本地服务查看报告
         analyzerHost: '127.0.0.1', // host 设置
+        // analyzerHost: '0.0.0.0', // host 设置
         analyzerPort: port(), // 端口号设置
       }),
     // new PurgeCSSPlugin({

@@ -16,4 +16,8 @@
     outline: none;
     border: 0px;
   }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
 }

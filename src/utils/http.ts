@@ -10,7 +10,6 @@ let toastId: undefined | string
 const startLoading = () => {
   if (reqNum === 0) {
     // console.log('开始-=loading--', reqNum)
-
     //loading开始
     // store.commit("common/setLoading", true);
     // toastId = toast.loading("Loading...");
@@ -84,8 +83,8 @@ const showStatus = (status: number) => {
 const service = axios.create({
   // 联调
   baseURL:
-    // process.env.NODE_ENV === "production" ? `` : "",
-    process.env.NODE_ENV === 'production' ? `https://api.gmduck.com` : '/api',
+    // process.env.NODE_ENV === "production" ? `` : "", http://test.api.gmduck.com/gateway/
+    process.env.NODE_ENV === 'production' ? `https://api.gmduck.com` : 'http://test.api.gmduck.com/gateway/',
   // process.env.NODE_ENV === "production" ? `http://test.api.gmduck.com` : "",
   // baseURL: "/api",
   // headers: {
@@ -99,10 +98,14 @@ const service = axios.create({
 
   // 是否跨站点访问控制请求
   withCredentials: true,
-  timeout: 30000,
+  timeout: 60000,
   transformRequest: [
     (data) => {
-      data = JSON.stringify(data)
+      console.log('data---', typeof data)
+
+      if (!utils.isFormData(data)) {
+        data = JSON.stringify(data)
+      }
       return data
     },
   ],
@@ -169,7 +172,7 @@ service.interceptors.request.use(
     //   startLoading()
     // }
 
-    removePending(config) // 在请求开始前，对之前的请求做检查取消操作
+    // removePending(config) // 在请求开始前，对之前的请求做检查取消操作
     addPending(config) // 将当前请求添加到 pending 中
     //获取token，并将其添加至请求头中
     // const token = localStorage.getItem("token");

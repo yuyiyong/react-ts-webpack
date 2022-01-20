@@ -4,7 +4,7 @@
   "description": "react ts webpack",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development  REACT_APP_ENV='development' node scripts/server",
+    "start": "cross-env NODE_ENV=development  REACT_APP_ENV='development' node scripts/server --host 0.0.0.0",
     "start:prod": "cross-env NODE_ENV=production REACT_APP_ENV='production' node scripts/server",
     "start:test": "cross-env NODE_ENV=test REACT_APP_ENV='test' webpack-dev-server --config ./scripts/config/webpack.prod.js",
     "build": "cross-env NODE_ENV=production webpack --config ./scripts/config/webpack.prod.js",

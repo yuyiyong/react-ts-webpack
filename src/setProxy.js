@@ -1,10 +1,11 @@
 const proxySettings = {
   // 接口代理1
   '/api': {
-    target: 'https://api.gmduck.com',
+    target: 'http://test.api.gmduck.com/gateway',
+    // target: 'https://api.gmduck.com',
     changeOrigin: true,
     pathRewrite: {
-      'api': '',
+      api: '',
     },
   },
   // 接口代理2
