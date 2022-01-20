@@ -19,5 +19,6 @@ module.exports = {
         },
       },
     ],
+    "transform-class-properties"
   ],
 };

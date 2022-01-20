@@ -1,133 +1,85 @@
-const path = require('path')
-const resolve = path.resolve
-const { PROJECT_PATH, isDev } = require('../constants')
+const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const WebpackBar = require('webpackbar')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const webpack = require('webpack')
-const getClientEnvironment = require('./env')
-// const paths = require('./paths');
-const env = getClientEnvironment('')
-const px2rem = require('postcss-pxtorem')
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const { isDev, PROJECT_PATH, IS_OPEN_HARD_SOURCE } = require('../constants')
+
 const getCssLoaders = (importLoaders) => [
-  isDev
-    ? 'style-loader'
-    : // 'style-loader',
-      {
-        loader: MiniCssExtractPlugin.loader,
-        options: {
-          esModule: false, // 使用commonjs规范解析css，require引入可以不加.default
-          publicPath: '../../', // 使url的查找路径为dist根路径
-        },
-      },
+  isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
   {
     loader: 'css-loader',
     options: {
       modules: false,
       sourceMap: isDev,
       importLoaders,
-      modules: false,
     },
   },
   {
     loader: 'postcss-loader',
     options: {
-      postcssOptions: {
-        plugins: [
-          require('postcss-flexbugs-fixes'),
-          !isDev && [
-            'postcss-preset-env',
-            {
-              autoprefixer: {
-                grid: false,
-                flexbox: 'no-2009',
-              },
-              stage: 3,
-            },
-          ],
-        ].filter(Boolean),
-      },
+      ident: 'postcss',
+      plugins: [
+        // 修复一些和 flex 布局相关的 bug
+        require('postcss-flexbugs-fixes'),
+        require('postcss-preset-env')({
+          autoprefixer: {
+            grid: true,
+            flexbox: 'no-2009'
+          },
+          stage: 3,
+        }),
+        require('postcss-normalize'),
+      ],
+      sourceMap: isDev,
     },
   },
 ]
 
 module.exports = {
-  target: 'web',
-  // target: 'node',
   entry: {
-    app: path.resolve(PROJECT_PATH, './src/index.tsx'),
+    app: resolve(PROJECT_PATH, './src/index.tsx'),
   },
   output: {
-    filename: isDev ? 'js/[name].js' : 'js/[name].[hash:8].js',
-    path: path.resolve(PROJECT_PATH, './dist'),
-    assetModuleFilename: 'images/[name].[contenthash:8].[ext]',
+    filename: `js/[name]${isDev ? '' : '.[hash:8]'}.js`,
+    path: resolve(PROJECT_PATH, './dist'),
   },
-
-  plugins: [
-    // new NodePolyfillPlugin({
-    //   excludeAliases: ["console"]
-    // }),
-    new webpack.ProvidePlugin({
-      process: 'process/browser.js',
-      Buffer: ['buffer', 'Buffer'],
-    }),
-    new webpack.DefinePlugin(env.stringified),
-    // new HardSourceWebpackPlugin(), // 过时
-
-    new WebpackBar({
-      name: isDev ? '正在启动' : '正在打包',
-      color: isDev ? '#52c41a' : '#722ed1',
-    }),
-    new ForkTsCheckerWebpackPlugin({
-      typescript: {
-        configFile: resolve(PROJECT_PATH, './tsconfig.json'),
-      },
-    }),
-    new HtmlWebpackPlugin({
-      template: resolve(PROJECT_PATH, './public/index.html'),
-      filename: 'index.html',
-      cache: true,
-      // minify: isDev
-      //   ? false
-      //   : {
-      //       removeAttributeQuotes: true,
-      //       collapseWhitespace: true,
-      //       removeComments: true,
-      //       collapseBooleanAttributes: true,
-      //       collapseInlineTagWhitespace: true,
-      //       removeRedundantAttributes: true,
-      //       removeScriptTypeAttributes: true,
-      //       removeStyleLinkTypeAttributes: true,
-      //       minifyCSS: true,
-      //       minifyJS: true,
-      //       minifyURLs: true,
-      //       useShortDoctype: true,
-      //     },
-    }),
-    new CopyPlugin({
-      patterns: [
-        {
-          context: resolve(PROJECT_PATH, './public'),
-          from: '*',
-          to: resolve(PROJECT_PATH, './dist'),
-          toType: 'dir',
-          globOptions: {
-            dot: true,
-            gitignore: true,
-            ignore: ['**/index.html'],
-          },
-        },
-      ],
-    }),
-  ],
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.json'],
+    alias: {
+      'Src': resolve(PROJECT_PATH, './src'),
+      'Common': resolve(PROJECT_PATH, './src/common'),
+      'Components': resolve(PROJECT_PATH, './src/components'),
+      'Utils': resolve(PROJECT_PATH, './src/utils'),
+    }
+  },
   module: {
     rules: [
       {
+        test: /\.(tsx?|js)$/,
+        loader: 'babel-loader',
+        options: { cacheDirectory: true },
+        exclude: /node_modules/,
+      },
+      {
         test: /\.css$/,
         use: getCssLoaders(1),
+      },
+      {
+        test: /\.less$/,
+        use: [
+          ...getCssLoaders(2),
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: isDev,
+            },
+          },
+        ],
       },
       {
         test: /\.scss$/,
@@ -143,85 +95,95 @@ module.exports = {
       },
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        type: 'asset',
-        parser: {
-          dataUrlCondition: {
-            maxSize: 3 * 1024,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10 * 1024,
+              name: '[name].[contenthash:8].[ext]',
+              outputPath: 'assets/images',
+            },
           },
+        ],
+      },
+      {
+        test: /\.(ttf|woff|woff2|eot|otf)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              name: '[name].[contenthash:8].[ext]',
+              outputPath: 'assets/fonts',
+            },
+          },
+        ],
+      },
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: resolve(PROJECT_PATH, './public/index.html'),
+      filename: 'index.html',
+      cache: false,
+      minify: isDev ? false : {
+        removeAttributeQuotes: true,
+        collapseWhitespace: true,
+        removeComments: true,
+        collapseBooleanAttributes: true,
+        collapseInlineTagWhitespace: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        minifyCSS: true,
+        minifyJS: true,
+        minifyURLs: true,
+        useShortDoctype: true,
+      },
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          context: resolve(PROJECT_PATH, './public'),
+          from: '*',
+          to: resolve(PROJECT_PATH, './dist'),
+          toType: 'dir',
         },
+      ],
+    }),
+    new WebpackBar({
+      name: isDev ? '正在启动' : '正在打包',
+      color: '#fa8c16',
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: resolve(PROJECT_PATH, './tsconfig.json'),
       },
-      {
-        test: /\.(eot|svg|ttf|woff|woff2?)$/,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.(tsx?|js)$/,
-        loader: 'babel-loader',
-        options: { cacheDirectory: true },
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  // other...
-  resolve: {
-    aliasFields: ['browser'],
-    extensions: ['.tsx', '.ts', '.js', '.json'],
-    alias: {
-      buffer: 'buffer',
-      https: 'https-browserify',
-      http: 'https-browserify',
-      Src: resolve(PROJECT_PATH, './src'),
-      Components: resolve(PROJECT_PATH, './src/components'),
-      Utils: resolve(PROJECT_PATH, './src/utils'),
-      App: resolve(PROJECT_PATH, './'),
-      assert: resolve(PROJECT_PATH, './assert.ts'),
-      path: resolve(PROJECT_PATH, './node_modules/path-browserify'),
-    },
-    fallback: {
-      // crypto: false,
-      // stream: require.resolve('stream-browserify'),
-      // buffer: require.resolve('buffer'),
-      // assert: false,
-      // util: false,
-      // http: false,
-      // https: false,
-      // os: false,
-      fs: false,
-      // "path": require.resolve("path-browserify"),
-      assert: require.resolve('assert/'),
-      buffer: require.resolve('buffer/'),
-      console: require.resolve('console-browserify'),
-      constants: require.resolve('constants-browserify'),
-      crypto: require.resolve('crypto-browserify'),
-      domain: require.resolve('domain-browser'),
-      events: require.resolve('events'),
-      http: require.resolve('stream-http'),
-      https: require.resolve('https-browserify'),
-      os: require.resolve('os-browserify/browser'),
-      path: require.resolve('path-browserify'),
-      punycode: require.resolve('punycode'),
-      process: require.resolve('process/browser'),
-      querystring: require.resolve('querystring-es3'),
-      stream: require.resolve('stream-browserify'),
-      string_decoder: require.resolve('string_decoder'),
-      sys: require.resolve('util'),
-      timers: require.resolve('timers-browserify'),
-      tty: require.resolve('tty-browserify'),
-      url: require.resolve('url'),
-      util: require.resolve('util'),
-      vm: require.resolve('vm-browserify'),
-      zlib: require.resolve('browserify-zlib'),
-    },
-  },
-  cache: {
-    type: 'filesystem',
-    buildDependencies: {
-      config: [__filename],
-    },
-  },
-  // 将这种第三方包剥离出去或者采用 CDN 链接形式
+    }),
+    IS_OPEN_HARD_SOURCE && new HardSourceWebpackPlugin(),
+    !isDev && new MiniCssExtractPlugin({
+      filename: 'css/[name].[contenthash:8].css',
+      chunkFilename: 'css/[name].[contenthash:8].css',
+      ignoreOrder: false,
+    }),
+  ].filter(Boolean),
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',
+  },
+  optimization: {
+    minimize: !isDev,
+    minimizer: [
+      !isDev && new TerserPlugin({
+        extractComments: false,
+        terserOptions: {
+          compress: { pure_funcs: ['console.log'] },
+        }
+      }),
+      !isDev && new OptimizeCssAssetsPlugin()
+    ].filter(Boolean),
+    splitChunks: {
+      chunks: 'all',
+      name: true,
+    },
   },
 }

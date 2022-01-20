@@ -1,7 +1,7 @@
 import * as React from 'react'
 import './proPrograss.scss'
 export interface IProPrograssProps {
-  size: size
+  size: SizeType
   prograss?: number
 }
 

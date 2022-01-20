@@ -1,8 +1,8 @@
-type size = { width: number | string; height: number | string }
+type SizeType = { width: number | string; height: number | string }
 interface IProUploadProps {
   onChange: (...event: any[]) => void
   value: string
-  size?: size
+  size?: SizeType
   limitSize?: number
   disabled?:boolean
 }
