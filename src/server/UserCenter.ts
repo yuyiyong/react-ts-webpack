@@ -14,7 +14,7 @@ class UserCenter {
     })
     // return http.get('/nft-service/coin/chainlist/new?status=0')
   }
-  static loginByMobile(data: {} | LoginParams): Promise<ResType<any>> {
+  static loginByMobile(data: {} | LoginParams): Promise<ResType<ILoginSuccessRes>> {
     return http.post('/user-center/login/sms', data, {
       headers: {
         'Content-Type': 'application/json;charset=utf-8',

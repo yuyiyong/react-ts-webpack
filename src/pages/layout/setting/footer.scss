@@ -1,0 +1,109 @@
+@import 'Src/global.scss';
+footer {
+  width: 100%;
+  background: #ffffff;
+  box-shadow: inset 0px 2px 0px 0px rgba(83, 65, 176, 0.5);
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+}
+.footer_wrap {
+  @extend .pc_wrap_width;
+  margin: 0 auto;
+  .foot_row_1 {
+    margin-top: 20px;
+    @extend .st;
+    .foot_l_1 {
+      @extend .lc;
+      .f_logo {
+        @include setImg('../../../../public/assets/images/meta_logo.png', 60px, 60px);
+        margin-right: 10px;
+      }
+      .footer_title {
+        span:nth-child(1) {
+          font-size: 18px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #312055;
+          line-height: 25px;
+          margin-right: 10px;
+        }
+        span:nth-child(2) {
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #312055;
+          line-height: 20px;
+        }
+      }
+    }
+    .foot_comtent {
+      font-size: 14px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      // font-weight: 500;
+      // color: #312055;
+      line-height: 20px;
+    }
+    .contect_us {
+      @extend .foot_comtent;
+      color: #312055;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .email_f {
+      @extend .foot_comtent;
+      color: #97969d;
+      font-weight: 400;
+    }
+    .foot_r {
+      @extend .sc;
+    }
+    .f_qr_b_wrap {
+      width: 75px;
+      margin-right: 20px;
+      .title {
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #312055;
+        line-height: 20px;
+        margin-bottom: 15px;
+        height: 20px;
+        min-width: 10px
+      }
+      .f_qr {
+        box-sizing: border-box;
+        width: 75px;
+        height: 75px;
+        @extend .f_qr_pub;
+        padding: 4px;
+      }
+      .f_qr_pub{
+        border: 1px solid #5341B0;
+      }
+      .f_qr_gzh{
+        @include setImg('../../../../public/assets/images/wx_gzh.jpg', 75px, 75px);
+        @extend .f_qr_pub;
+      }
+    }
+    .margin_l_30 {
+      margin-left: 30px;
+    }
+  }
+  .foot_line {
+    height: 1px;
+    background: #ededed;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+}
+
+.foot_cp {
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #97969d;
+  line-height: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}

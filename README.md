@@ -46,6 +46,9 @@ react ts webpack
 
 #### toast(信息) 正常使用
 
+> 设计思路 const [toast] = useToast();
+> toast.loading('loading...')
+
 #### loading （http ）
 
 #### modal

@@ -1,3 +1,4 @@
+@import 'Src/global.scss';
 .modal_wrap {
   height: 100%;
   width: 100%;
@@ -8,29 +9,38 @@
 }
 
 .content_wrap {
-  background-color: #fff;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
+  background: #ffffff;
+  border-radius: 5px;
+  .promodal_btn_width_g{
+    min-width: 120px;
+    margin: 0 10px;
+  }
 }
 
-$title_padding: 10px;
-.title {
+$title_padding: 20px;
+.modal_title_wrap {
   text-align: center;
   position: relative;
-  padding: $title_padding;
+  padding: 20px 20px 0 20px;
+  font-size: 20px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #312055;
+  line-height: 28px;
 }
 
-.close {
+.modaltitle_close {
   position: absolute;
-  right: $title_padding;
-  top: $title_padding;
+  right: 16px;
+  top: 16px;
   cursor: pointer;
+  @include setImg('../../../public/assets/images/modalclose.png', 14px, 14px);
 }
-.footer_wrap {
-  display: flex;
-  justify-content: space-between;
-  background: #ccc;
+.m_footer_wrap_g {
+  @extend .cc;
   padding: $title_padding;
 }

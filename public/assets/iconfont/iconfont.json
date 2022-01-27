@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "27422950",
+      "name": "闹钟3",
+      "font_class": "naozhong3",
+      "unicode": "e68a",
+      "unicode_decimal": 59018
+    },
+    {
+      "icon_id": "27371512",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "26987098",
+      "name": "点赞背景",
+      "font_class": "dianzanbeijing",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "26987076",
+      "name": "更换背景",
+      "font_class": "genghuanbeijing",
+      "unicode": "e677",
+      "unicode_decimal": 58999
+    },
+    {
       "icon_id": "26953618",
       "name": "点赞背景2",
       "font_class": "dianzanbeijing2",

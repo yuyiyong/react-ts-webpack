@@ -37,6 +37,26 @@ class ProductCenter {
   }): Promise<any> {
     return http.get('/product-center/game/page', { params: data })
   }
+
+  static artAddCheckBatch(data: IArtAddCheckBatchQ): Promise<any> {
+    return http.post('/product-center/art/addCheckBatch', data, {
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+    })
+  }
+
+  static artAddBatch(data: IArtAddCheckBatchQ): Promise<any> {
+    return http.post('/product-center/art/addBatch', data, {
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+    })
+  }
+  // * 获取已申请的信息
+  static artistApplyInfo(): Promise<any>{
+    return http.get('/product-center/artistApply/info')
+  }
 }
 
 export default ProductCenter

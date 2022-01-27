@@ -10,6 +10,7 @@ import HookToast from 'Src/components/toast/HookToast'
 import useAsyncFn from 'Src/hooks/useAsyncFn'
 import ProductCenter from 'Src/server/ProductCenter'
 import utils from 'Src/utils/utils'
+import './collectionPage.scss'
 
 export interface ICollectionPageCompProps {
   value: number
@@ -24,6 +25,9 @@ export default function CollectionPageComp({ value, onChange }: ICollectionPageC
       success: (data) => {
         console.log('data===>', data)
       },
+      error:()=>{
+        
+      }
     })
   }, [])
 
@@ -84,12 +88,13 @@ export default function CollectionPageComp({ value, onChange }: ICollectionPageC
     })
   }
   return (
-    <React.Fragment>
-      <Pre>{value}</Pre>
+    <div className="collection_wrap_g">
+      {/* <Pre>{value}</Pre> */}
       {state.value &&
         state.value.length > 0 &&
         state.value.map((item, key) => (
           <div
+            className={'cpc_nomorl_block ' + (item.id === value && 'cpc_active_block')}
             onClick={() => {
               clickHandle(item)
             }}
@@ -98,17 +103,23 @@ export default function CollectionPageComp({ value, onChange }: ICollectionPageC
             {item.name}
           </div>
         ))}
-      <ProBtn onClick={showModal}>add + </ProBtn>
-      <ProModal visible={visiable} onCancel={cancelModal} onOk={okHandle}>
-        <form>
-          <InputWrap>
+      <div className="collection_p_btn" onClick={showModal}>
+        {' '}
+        + 添加作品集{' '}
+      </div>
+      <ProModal title="添加作品集" visible={visiable} onCancel={cancelModal} onOk={okHandle} footer={false}>
+        <form className="add_collection_page_modal_wrap">
+          <InputWrap type="modal">
             <input
               {...register('name', {
                 required: true,
               })}
+              placeholder='请输入作品集名称'
             />
           </InputWrap>
-          {errors.name && <span>必填</span>}
+          {errors.name && <span className='error_massage_form'>作品集名称不能为空</span>}
+
+          <div className='collection_modal_subtitle'>作品集名称创建后不可修改或删除</div>
           {/* <ModalFooter>
             <InputBtn>
               <input type={'submit'} value={'提交'} />
@@ -116,7 +127,12 @@ export default function CollectionPageComp({ value, onChange }: ICollectionPageC
             <ProBtn onClick={cancelModal}>取消</ProBtn>
           </ModalFooter> */}
         </form>
+        <ModalFooter>
+          <ProBtn className="artadd_modal_btn" onClick={okHandle}>
+            保存
+          </ProBtn>
+        </ModalFooter>
       </ProModal>
-    </React.Fragment>
+    </div>
   )
 }

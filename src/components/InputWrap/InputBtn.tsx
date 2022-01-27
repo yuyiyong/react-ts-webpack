@@ -1,9 +1,10 @@
 import * as React from 'react'
-import "./setting/inputBtn.scss"
+import './setting/inputBtn.scss'
 export interface IInputBtnProps {
   children: React.ReactNode
+  className?: string
 }
 
-export default function InputBtn(props: IInputBtnProps) {
-  return <div className='inputBtn'>{props.children}</div>
+export default function InputBtn({ children, className }: IInputBtnProps) {
+  return <div className={'inputBtn' +' '+ (className ? className : '')}>{children}</div>
 }

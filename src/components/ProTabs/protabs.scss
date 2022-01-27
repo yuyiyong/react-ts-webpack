@@ -1,0 +1,24 @@
+@import 'Src/global.scss';
+.protabs_g_wrap {
+  @extend .lc;
+
+  .active {
+    font-weight: 500;
+    color: #312055;
+  }
+  .protabsItem {
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #5a5e6a;
+    line-height: 20px;
+  }
+  .protabs_line {
+    height: 4px;
+    border-radius: 3px;
+    margin-top: 5px;
+  }
+  .protabs_block {
+    margin-right: 30px;
+  }
+}

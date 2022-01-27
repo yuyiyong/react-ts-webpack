@@ -1,0 +1,111 @@
+@import 'Src/global.scss';
+
+.add_art_g_wrap {
+  @extend .pc_wrap_width;
+  margin: 0 auto;
+  .margin_top_15 {
+    margin-top: 15px;
+  }
+  .art_add_line {
+    height: 1px;
+    background: #ededed;
+    width: 100%;
+    margin: 30px 0;
+  }
+  .artadd_img_item_wrap {
+    position: relative;
+    @extend .lc;
+    margin-top: 30px;
+    .del_icon_div {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
+    .addart_del_icon {
+      font-size: 15px;
+      color: #a4a8a8;
+    }
+    .artadd_img_item_r {
+      b {
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #312055;
+        line-height: 20px;
+        margin-bottom: 5px;
+      }
+      margin-left: 20px;
+      height: 200px;
+      flex: 1;
+      flex-direction: column;
+      @extend .lt;
+      .row1 {
+        width: 100%;
+        @extend .lc;
+        .num_div {
+          width: 219px;
+        }
+        .name_div {
+          flex: 1;
+        }
+      }
+      .row2 {
+        width: 100%;
+        margin-top: 15px;
+      }
+    }
+  }
+}
+.sizebox_20 {
+  width: 20px;
+  height: 1px;
+}
+.aart_add_card_title {
+  font-size: 14px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #312055;
+  line-height: 20px;
+  span {
+    color: #5341b0;
+  }
+}
+
+.add_art_card_bottom {
+  box-sizing: border-box;
+  margin: 15px 0 30px;
+  background: #ffff;
+  width: 100%;
+  padding: 30px 20px;
+  @extend .sc;
+}
+.submit_addart_btn {
+  input {
+    padding: 10px 86px;
+    font-size: 14px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 20px;
+  }
+}
+.artadd_modal_content_wrap {
+  padding: 16px 20px 0;
+}
+
+.artadd_modal_btn {
+  min-width: 120px;
+}
+.artadd_pw_modal_wrap_g {
+  width: 360px;
+}
+.artadd_paypw_modal_content {
+  text-align: center;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #312055;
+  line-height: 20px;
+  margin-top: 30px;
+}

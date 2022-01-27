@@ -1,0 +1,9 @@
+@import 'Src/global.scss';
+.pwicon_closeIcon {
+  @include setImg('../../../public/assets/images/openIcon.png', 18px, 18px);
+  cursor: pointer;
+}
+.pwicon_openIcon {
+  @include setImg('../../../public/assets/images/closeIcon.png', 18px, 18px);
+  cursor: pointer;
+}

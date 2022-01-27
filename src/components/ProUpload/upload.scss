@@ -1,6 +1,32 @@
-.hh {
-    background: #ccc;
-    width: 100px;
-    height: 50px;
-    display: block;
+@import 'Src/global.scss';
+.proupload_g_wrap {
+  cursor: pointer;
+  display: block;
+  width: 200px;
+  height: 200px;
+  background: #f7f6fd;
+  border-radius: 8px;
+  border: 1px dashed #5341b0;
+  .proupload_icon {
+    margin: 53px auto 0;
+    @include setImg('../../../public/assets/images/uploadIcon.png', 28px, 28px);
+  }
+  .proupload_title {
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #5341b0;
+    line-height: 17px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .proupload_subtitle {
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(83, 65, 176, 0.5);
+    line-height: 17px;
+    margin: 5px 13px 0;
+    text-align: center;
+  }
 }

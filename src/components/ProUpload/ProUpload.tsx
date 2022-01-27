@@ -16,6 +16,7 @@ type ImgType = {
 }
 
 type StateImgType = Record<string, ImgType>
+
 export default function ProUpload({
   onChange,
   value,
@@ -26,15 +27,17 @@ export default function ProUpload({
   // const [prograss, setProgress] = React.useState(0)
   const [stateImg, setStateImg] = React.useState<StateImgType>({})
   // const [src, setSrc] = React.useState<any>('')
+
   const onSuccessHandle = (response: Record<string, unknown>, file: RcFile, xhr: XMLHttpRequest) => {
     console.log('onSuccessHandle-', response, file)
+    // onChange('11') // TODO:需要删除
     utils.codeResult<any>({
       res: response as any,
-      success: () => {
-        console.log('成功了')
+      success: (data) => {
+        console.log('成功了', data)
+        onChange(data)
       },
     })
-    onChange('nihao')
   }
   const onErrorHandle = (data: any) => {
     console.log('onErrorHandle-', data)
@@ -135,8 +138,8 @@ export default function ProUpload({
     onSuccess,
     withCredentials,
   }: UploadRequestOption<any>) => {
-    console.log('file111---', file)
-    console.log('data111---', data)
+    // console.log('file111---', file)
+    // console.log('data111---', data)
     const formData = new FormData()
     if (data) {
       Object.keys(data).forEach((key) => {
@@ -145,18 +148,12 @@ export default function ProUpload({
     }
     formData.append('file', file)
     formData.append('type', UPLOAD_TYPE.ART_IMAGE)
-    formData.forEach((item, key) => {
-      console.log(key, 'key---', formData.get(key))
-    })
-    // axios.post(action,formData,{
-
-    // }).then((data) => {
-    //   onSuccess && onSuccess({ data, file })
+    // formData.forEach((item, key) => {
+    //   console.log(key, 'key---', formData.get(key))
     // })
-    // return
 
     http
-      .post(action+'123', formData, {
+      .post(action, formData, { // TODO:需要改
         headers: {
           ...headers,
 
@@ -175,7 +172,7 @@ export default function ProUpload({
   }
   return (
     <React.Fragment>
-      <Pre>{stateImg}</Pre>
+      {/* <Pre>{stateImg}</Pre>
       <div>
         {Object.keys(stateImg).length > 0 &&
           Object.keys(stateImg).map((item, index) => {
@@ -197,9 +194,9 @@ export default function ProUpload({
               </>
             )
           })}
-      </div>
+      </div> */}
       <Upload
-        className="hh"
+        className="proupload_g_wrap"
         name="file" // 文件名称
         withCredentials={true} // ajax upload with cookie send
         openFileDialogOnClick={true}
@@ -215,7 +212,9 @@ export default function ProUpload({
         type="drag"
         customRequest={customRequest}
       >
-        你好
+        <div className="proupload_icon"></div>
+        <div className="proupload_title">点击或将文件拖拽到这里上传</div>
+        <div className="proupload_subtitle">支持类型：JPG .PNG .GIF .SVG 不超过30M</div>
       </Upload>
       {/* {ProgressRef.current && ProgressRef.current < 99 && (
         <ProPrograss

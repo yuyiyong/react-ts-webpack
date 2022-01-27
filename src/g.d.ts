@@ -24,3 +24,11 @@ interface ICustomerListProps {
   itemSize:number
   request:CustomerListRequestFn
 }
+
+interface VerType {
+  android: string;
+  android_updateurl: string;
+  android_updatetype: string;
+  app_name: string;
+  update_info: string;
+}

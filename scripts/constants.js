@@ -6,6 +6,7 @@ const PROJECT_NAME = path.parse(PROJECT_PATH).name
 const isDev = process.env.NODE_ENV !== 'production'
 const SERVER_HOST = 'localhost'
 // const SERVER_HOST = '192.168.198.2'
+// const SERVER_HOST = '0.0.0.0'
 const SERVER_PORT = 8080
 
 const openAnalyzer = false
@@ -14,7 +15,7 @@ const openAnalyzer = false
 const IS_OPEN_HARD_SOURCE = true
 
 // 是否开启 bundle 包分析
-const shouldOpenAnalyzer = true
+const shouldOpenAnalyzer = false
 
 module.exports = {
   PROJECT_PATH,

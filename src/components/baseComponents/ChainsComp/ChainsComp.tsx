@@ -3,6 +3,7 @@ import Pre from 'Src/components/Pre/Pre'
 import useAsyncFn from 'Src/hooks/useAsyncFn'
 import NftServer from 'Src/server/NftServer'
 import utils from 'Src/utils/utils'
+import './CollectionPageComp/collectionPage.scss'
 
 export interface IChainsCompProps {
   value: number
@@ -31,22 +32,21 @@ export default function ChainsComp({ value, onChange }: IChainsCompProps) {
     onChange(val.chainId)
   }
   return (
-    <React.Fragment>
-      <Pre>{value}</Pre>
+    <div className="collection_wrap_g">
+      {/* <Pre>{value}</Pre> */}
       {state.value &&
         state.value.length > 0 &&
         state.value.map((item, key) => (
-          <>
-            <div
-              key={key}
-              onClick={() => {
-                clickHandle(item)
-              }}
-            >
-              {item.nameCn}
-            </div>
-          </>
+          <div
+            className={'cpc_nomorl_block ' + (item.chainId === value && 'cpc_active_block')}
+            key={key}
+            onClick={() => {
+              clickHandle(item)
+            }}
+          >
+            {item.nameCn}
+          </div>
         ))}
-    </React.Fragment>
+    </div>
   )
 }

@@ -1,0 +1,19 @@
+@import 'Src/global.scss';
+.nocreate_wrap_g {
+  @extend .pc_wrap_width;
+  margin: 15px auto;
+  background-color: #ffff;
+  height: 453px;
+  .nocreate_img {
+    @include setImg('../../../public/assets/images/nocreate.png', 123px, 118px);
+    margin: 126px auto 21px;
+  }
+}
+.text_center {
+  text-align: center;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #312055;
+  line-height: 20px;
+}

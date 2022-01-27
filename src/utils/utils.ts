@@ -71,12 +71,17 @@ class ComUtils {
         success(res.data, res.page)
         return res.data
       } else {
-        error && error(res && res.data)
         console.log('error message--', res.message)
+        if (error) {
+          error && error(res && res.data)
+        } else {
+          res.message && HookToast(res.message)
+        }
 
-        res.message && HookToast(res.message)
         if (res.code === 1003) {
           console.log('去登陆')
+          window.location.replace('/#/login')
+          // (window as any).href('/login')
           // ! 是否去掉cookie
         }
         return null

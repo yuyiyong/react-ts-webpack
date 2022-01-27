@@ -8,9 +8,9 @@ export interface IModalTitleProps {
 
 export default function ModalTitle({ children, onClose }: IModalTitleProps) {
   return (
-    <div className="title">
-      <div className='close' onClick={onClose}>
-        X
+    <div className="modal_title_wrap">
+      <div className='modaltitle_close' onClick={onClose}>
+        
       </div>
       {children}
     </div>

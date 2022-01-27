@@ -80,12 +80,28 @@ const showStatus = (status: number) => {
   return `${message}，请检查网络或联系管理员！`
 }
 
+const envBaseUrl = () => {
+  console.log('process.env.NODE_ENV---', process.env.NODE_ENV)
+
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      return 'https://api.gmduck.com'
+    case 'test':
+      return 'http://test.api.gmduck.com'
+    case 'development':
+      return '/api'
+    default:
+      return 'http://test.api.gmduck.com'
+  }
+
+  // return process.env.NODE_ENV === "production" ? `http://test.api.gmduck.com` : "/api",
+}
+
 const service = axios.create({
   // 联调
-  baseURL:
-    // process.env.NODE_ENV === "production" ? `` : "", http://test.api.gmduck.com/gateway/
-    process.env.NODE_ENV === 'production' ? `https://api.gmduck.com` : 'http://test.api.gmduck.com/gateway/',
-  // process.env.NODE_ENV === "production" ? `http://test.api.gmduck.com` : "",
+  baseURL: envBaseUrl(),
+  // process.env.NODE_ENV === 'production' ? `https://api.gmduck.com` : 'http://test.api.gmduck.com/gateway/',
+
   // baseURL: "/api",
   // headers: {
   //   get: `{

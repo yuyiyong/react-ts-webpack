@@ -35,7 +35,9 @@ export default function About(props: IAboutProps) {
   const handle = () => {
     console.log('handle -78787878')
     HookToast('hahaha')
-    setVisible(true)
+    HookToast("123456789j")
+    HookToast("nihao")
+    // setVisible(true)
   }
   const onCancel = () => {
     setVisible(false)

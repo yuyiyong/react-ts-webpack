@@ -1,3 +1,8 @@
 @import 'Src/global.scss';
-.btn {
+.probtn {
+  @extend .btn;
+}
+
+.pro_minor_btn{
+  @extend .minor_btn;
 }

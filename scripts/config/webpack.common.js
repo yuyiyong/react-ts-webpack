@@ -8,6 +8,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const { isDev, PROJECT_PATH, IS_OPEN_HARD_SOURCE } = require('../constants')
+const webpack = require('webpack')
+const getClientEnvironment = require('./env')
+// const paths = require('./paths');
+const env = getClientEnvironment('')
 
 const getCssLoaders = (importLoaders) => [
   isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -102,6 +106,7 @@ module.exports = {
               limit: 10 * 1024,
               name: '[name].[contenthash:8].[ext]',
               outputPath: 'assets/images',
+              publicPath:'../assets/images/',
             },
           },
         ],
@@ -121,6 +126,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin(env.stringified),
     new HtmlWebpackPlugin({
       template: resolve(PROJECT_PATH, './public/index.html'),
       filename: 'index.html',
@@ -176,7 +182,7 @@ module.exports = {
       !isDev && new TerserPlugin({
         extractComments: false,
         terserOptions: {
-          compress: { pure_funcs: ['console.log'] },
+          // compress: { pure_funcs: ['console.log'] },
         }
       }),
       !isDev && new OptimizeCssAssetsPlugin()

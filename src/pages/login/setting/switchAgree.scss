@@ -1,0 +1,50 @@
+@import 'Src/global.scss';
+.switch_bash {
+  margin-right: 5px;
+}
+.select_switch_agrree {
+  box-sizing: border-box;
+  @extend .switch_bash;
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 7px;
+  border: 1px solid #97969d;
+}
+.login_selected_wrap {
+  height: 14px;
+  .selected {
+    font-size: 14px;
+    @extend .switch_bash;
+    color: #5341b0;
+  }
+}
+
+.login_modal_wrap_g {
+  padding: 0 30px 30px;
+  .login_modal_title {
+    font-size: 24px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #312055;
+    line-height: 33px;
+  }
+  .login_modal_content_wrap {
+    width: 100%;
+    height: 587px;
+    overflow: auto;
+    margin-top: 18px;
+    .login_modal_content {
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #312055;
+      line-height: 24px;
+      width: 525px;
+      // text-align: justify;
+      white-space:  pre-line;
+      // word-break:break-all;
+    }
+  }
+}

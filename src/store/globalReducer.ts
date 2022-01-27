@@ -1,14 +1,17 @@
 export const defaultGlabal: globalState = {
   test: '我是test',
+  userInfo: null,
 }
 
 export const TEST_TYPE = 'test'
+export const USER_INFO = 'User_Info'
 
 export const reducerGlobal = (state = defaultGlabal, action: actionType = {}) => {
   switch (action.type) {
     case TEST_TYPE:
       return setTest(state, action)
-
+    case USER_INFO:
+      return setUserInfo(state, action)
     default:
       return {
         ...state,
@@ -16,7 +19,7 @@ export const reducerGlobal = (state = defaultGlabal, action: actionType = {}) =>
   }
 }
 
-const setTest =  (state: globalState, action: actionType) => {
+const setTest = (state: globalState, action: actionType) => {
   console.log('44444--')
 
   const { body } = action
@@ -28,6 +31,22 @@ const setTest =  (state: globalState, action: actionType) => {
       params = {
         ...state,
         test: body.test,
+      }
+    }
+  }
+  return params
+}
+
+const setUserInfo = (state: globalState, action: actionType) => {
+  const { body } = action
+  console.log('555--', body?.userInfo)
+  console.log('555--', typeof body?.userInfo)
+  let params = { ...state }
+  if (body && body.userInfo) {
+    if (typeof body.userInfo === 'object') {
+      params = {
+        ...state,
+        userInfo: { ...(body.userInfo as ILoginSuccessRes) },
       }
     }
   }

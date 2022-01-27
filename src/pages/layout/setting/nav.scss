@@ -1,5 +1,59 @@
 @import 'Src/global.scss';
+.nav_wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  background: #fff;
+  .nav_max_wrap {
+    @extend .pc_wrap_width;
+    height: 80px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    @extend .sc;
 
+    .logo_wrap {
+      @extend .lc;
+      h1 {
+        width: 28px;
+        height: 20px;
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #312055;
+        line-height: 20px;
+        margin: 0 0 5px 0;
+      }
+      .log_sub_title {
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #97969d;
+        line-height: 17px;
+      }
+      .logo {
+        @include setImg('../../../../public/assets/images/meta_logo.png', 50px, 50px);
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    }
+
+    .regist_btn_wrap {
+      @extend .rc;
+      .nav_icon {
+        @include setImg('../../../../public/assets/images/siname.png', 24px, 24px);
+        margin-right: 30px;
+      }
+      .regist_btn {
+        padding: 10px 33px;
+      }
+    }
+    // color: rgba($color: $font_c, $alpha: 0.7);
+  }
+}
 .nav_menu {
   @extend .sc;
   width: 400px;
@@ -7,15 +61,4 @@
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-}
-
-.nav_wrap {
-  background: rgba($color: rgb(4, 81, 197), $alpha: 0.5);
-  display: flex;
-  justify-content: space-between;
-  a {
-    color: rgba($color: $font_c, $alpha: 0.7);
-  }
-  color: rgba($color: $font_c, $alpha: 0.7);
-  position: relative;
 }

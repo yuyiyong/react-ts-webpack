@@ -1,0 +1,45 @@
+@import 'Src/global.scss';
+.collection_wrap_g {
+  margin-top: 15px;
+  @extend .lc;
+  flex-wrap: wrap;
+  .cpc_nomorl_block {
+    background: #f7f6fd;
+    border-radius: 15px;
+    padding: 6px 15px;
+    margin-right: 15px;
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #312055;
+    line-height: 18px;
+    cursor: pointer;
+  }
+  .cpc_active_block {
+    border: 1px solid #5341b0;
+    color: #5341b0;
+  }
+  .collection_p_btn {
+    background: #5341b0;
+    border-radius: 15px;
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #fff;
+    line-height: 18px;
+    padding: 6px 15px;
+    cursor: pointer;
+  }
+}
+.add_collection_page_modal_wrap {
+  padding: 16px 20px 0;
+}
+.collection_modal_subtitle {
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #312055;
+  line-height: 20px;
+  text-align: center;
+  margin-top: 10px;
+}

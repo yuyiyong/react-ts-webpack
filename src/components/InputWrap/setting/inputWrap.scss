@@ -1,16 +1,31 @@
 @import 'Src/global.scss';
-.wrap {
+
+.modal_input_wrap {
+  border-radius: 20px !important;
+  @extend .input_wrap;
+}
+.input_wrap {
   padding: 10px;
-  border: 1px solid #ccc;
-  background: #000;
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #d7d7d7;
   @extend .sc;
   input {
+    width: 100%;
     background: transparent;
     border: none;
-    color: #fff;
-    width: 100%;
-    padding: 0;
-    margin: 0;
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #312055;
+    line-height: 20px;
+    &::placeholder {
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #97969d;
+      line-height: 20px;
+    }
   }
   input:focus {
     outline: none;
@@ -18,6 +33,79 @@
   }
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+}
+
+.login_input_wrap {
+  padding: 5px 0;
+
+  // background: #000;
+  @extend .sc;
+  input {
+    background: transparent;
+    border: none;
+    color: #000;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    &::placeholder {
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba($color: #97969d, $alpha: 0.5);
+      // color: #432dc0;
+      line-height: 22px;
+      // text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+  input:focus {
+    outline: none;
+    border: 0px;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+}
+.line_l_box_s {
+  height: 1px;
+  background: #c3c3c3;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+.textarea_input_wrap {
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #d7d7d7;
+  @extend .sc;
+  textarea {
+    resize: none;
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #312055;
+    line-height: 20px;
+    &::placeholder {
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #97969d;
+      line-height: 20px;
+    }
+  }
+  textarea:focus {
+    outline: none;
+    border: 0px;
+  }
+  textarea::-webkit-outer-spin-button,
+  textarea::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
 }

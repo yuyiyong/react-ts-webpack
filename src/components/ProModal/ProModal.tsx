@@ -25,15 +25,16 @@ export interface IModalProps {
   mask?: boolean
   maskClosable?: boolean
   children?: React.ReactNode
+  className?: string
 }
 
 export default function ProModal({
   visible = false,
   style,
-  width = 520,
-  zIndex = 1000,
+  width = 500,
+  zIndex = 500,
   centered = false,
-  title = 'title',
+  title = '',
   footer = true,
   wrapClassName = '',
   okText = '确定',
@@ -46,6 +47,7 @@ export default function ProModal({
   mask = true,
   maskClosable = true,
   children = 'Basic body',
+  className,
 }: IModalProps) {
   const portalDiv = document.querySelector('#root')
 
@@ -56,14 +58,15 @@ export default function ProModal({
           style={{
             zIndex,
           }}
-          className="modal_wrap"
+          className={'modal_wrap '}
         >
-          <div className="content_wrap" style={{ minWidth: width }}>
+          <div className={'content_wrap ' + (className ? className : '')} style={{ width: width }}>
             <ModalTitle onClose={onCancel}>{title}</ModalTitle>
             {children}
             {footer && (
               <ModalFooter>
-                <ProBtn onClick={onOk}>确定</ProBtn> <ProBtn onClick={onCancel}>取消</ProBtn>
+                <ProBtn type='minor'  className='promodal_btn_width_g' onClick={onCancel}>取消</ProBtn>
+                <ProBtn className='promodal_btn_width_g' onClick={onOk}>确定</ProBtn> 
               </ModalFooter>
             )}
           </div>

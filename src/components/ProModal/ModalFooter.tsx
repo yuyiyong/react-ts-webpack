@@ -6,6 +6,6 @@ export interface IModalFooterProps {
 }
 
 export default function ModalFooter({ children }: IModalFooterProps) {
-  return <div className="footer_wrap">{children}</div>
+  return <div className="m_footer_wrap_g">{children}</div>
   // return <div className={styles.footer_wrap}>{children}</div>
 }

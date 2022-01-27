@@ -9,7 +9,9 @@ interface loginByMobileParams {
   countryCode?: number
 }
 
-interface LoginParams extends loginByEmailParams, loginByMobileParams {}
+interface LoginParams extends loginByEmailParams, loginByMobileParams {
+  agree:boolean
+}
 
 type sendEmailParams = {
   type: SEND_EMAIL_TYPE

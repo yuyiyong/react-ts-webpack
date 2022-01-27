@@ -5,7 +5,7 @@ const proxySettings = {
     // target: 'https://api.gmduck.com',
     changeOrigin: true,
     pathRewrite: {
-      api: '',
+      '^/api': '',
     },
   },
   // 接口代理2
